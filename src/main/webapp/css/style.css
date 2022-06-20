@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#homeworksGiven {
+    margin-left: 5%;
+    width: 90%;
+    background-color: cornflowerblue;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+#allSubmits {
+    margin-top: 100px;
+    margin-left: 5%;
+    width: 90%;
+    background-color: chocolate;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: auto auto auto;
+}
+
+.homework {
+    background-color: lightgrey;
+    width: 80%;
+}
+
+.submit {
+    background-color: lightgrey;
+    width: 80%;
+}
