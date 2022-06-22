@@ -3,6 +3,7 @@ package dao;
 import entity.Homework;
 import runner.DBUtil;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -181,5 +182,23 @@ public class HomeworkDAO implements DAO<Homework> {
             e.printStackTrace();
         }
         return homeworkList;
+    }
+
+    public InputStream getPDFByID(int id) throws SQLException {
+        String sqlCommand = "SELECT " + PDF_FILE + " FROM " + TABLE + " WHERE " + HOMEWORK_ID + " = ?";
+        InputStream inputStream = null;
+
+        try (Connection connection = DBUtil.getDataSource().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand);) {
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                inputStream = resultSet.getBinaryStream(PDF_FILE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inputStream;
     }
 }

@@ -113,6 +113,8 @@ public class UserDAO implements DAO<User> {
         try (Connection connection = DBUtil.getDataSource().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand); ){
             preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();

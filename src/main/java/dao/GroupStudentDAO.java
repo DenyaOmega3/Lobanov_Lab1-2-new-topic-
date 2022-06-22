@@ -1,6 +1,7 @@
 package dao;
 
 import entity.GroupStudent;
+import entity.Homework;
 import runner.DBUtil;
 
 import java.sql.*;
@@ -37,7 +38,24 @@ public class GroupStudentDAO implements DAO<GroupStudent> {
 
     @Override
     public List<GroupStudent> getAll() throws SQLException {
-        return null;
+        String sqlCommand = "SELECT * FROM " + TABLE;
+        List<GroupStudent> groupStudentList = new ArrayList<>();
+
+        try (Connection connection = DBUtil.getDataSource().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand);) {
+            ResultSet resultSet = preparedStatement.executeQuery(sqlCommand);
+
+            while (resultSet.next()) {
+                GroupStudent groupStudent = new GroupStudent();
+                groupStudent.setStudent(userDAO.getByID(resultSet.getInt(USER_ID)));
+                groupStudent.setGroup(groupDAO.getByID(resultSet.getInt(GROUP_ID)));
+
+                groupStudentList.add(groupStudent);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return groupStudentList;
     }
 
     @Override
@@ -67,6 +85,17 @@ public class GroupStudentDAO implements DAO<GroupStudent> {
 
     @Override
     public void remove(int id) throws SQLException {
+        String sqlCommand = "DELETE FROM " + TABLE + " WHERE " + USER_ID + " = ?";
+
+        try (Connection connection = DBUtil.getDataSource().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand); ){
+            preparedStatement.setInt(1, id);
+
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<GroupStudent> getStudentsWithoutGroup() throws SQLException {

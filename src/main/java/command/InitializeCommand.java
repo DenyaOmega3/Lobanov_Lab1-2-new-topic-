@@ -3,6 +3,7 @@ package command;
 import dao.GroupStudentDAO;
 import dao.HomeworkDAO;
 import dao.SubmitDAO;
+import dao.UserDAO;
 import entity.*;
 
 import javax.servlet.ServletException;
@@ -58,7 +59,11 @@ public class InitializeCommand implements ICommand {
                 request.setAttribute("submitList", submitList);
             }
             else {
-                System.out.println("???");
+                List<GroupStudent> userList = groupStudentDAO.getAll();
+                for (GroupStudent s : userList) {
+                    System.out.println(s);
+                }
+                request.setAttribute("userList",userList);
             }
 
         } catch (SQLException e) {

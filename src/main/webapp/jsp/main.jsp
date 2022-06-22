@@ -11,22 +11,43 @@
 </head>
 <body>
     <jsp:useBean id="now" class="java.util.Date" />
+    <c:choose>
+        <c:when test="${user != null}">
+            <a href="/base?command=signOut">Sign out</a>
+            <p>Welcome, ${user.firstName} ${user.lastName}</p>
+        </c:when>
+        <c:otherwise>
+            <p>You're not logged in. Please, <a href="/signin">do that</a></p>
+        </c:otherwise>
+    </c:choose>
+
     <div>
         <c:if test="${user.typo == 'admin'}">
-            <a href="/signup">Sign up</a>
+            <a href="/signup">Add user</a>
+            <br/>
             <a href="/creategroup">Create group</a>
             <a href="/studenttogroup">Distribute students to groups</a>
+            <br/>
+            <br/>
+            <table>
+            <c:forEach var="user" items="${userList}">
+                <tr>
+                <td>${user.student.firstName} ${user.student.lastName}</td>
+                    <c:choose>
+                        <c:when test="${user.group.number != 0}">
+                            <td>${user.group.codename}-${user.group.number}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>no group</td>
+                        </c:otherwise>
+                    </c:choose>
+                <td><a href="/base?command=showDataInUserForm&id=${user.student.id}&first_name=${user.student.firstName}&last_name=${user.student.lastName}&email=${user.student.email}&password=${user.student.password}&typo=${user.student.typo}">Update</a></td>
+                <td><a href="/base?command=deleteStudent&id=${user.student.id}">Delete</a></td>
+                <td><a href="/switchgroup?user_id=${user.student.id}&group_id=${user.group.id}">Change group</a></td>
+                </tr>
+            </c:forEach>
+            </table>
         </c:if>
-
-        <c:choose>
-            <c:when test="${user != null}">
-                <a href="/base?command=signOut">Sign out</a>
-                <p>Welcome, ${user.firstName} ${user.lastName}</p>
-            </c:when>
-            <c:otherwise>
-                <p>You're not logged in. Please, <a href="/signin">do that</a></p>
-            </c:otherwise>
-        </c:choose>
 
         <br/>
 
@@ -40,9 +61,7 @@
                     <p>${homework.name}</p>
                     <p>From ${homework.userID.lastName} ${homework.userID.firstName}</p>
                     <p>${homework.description}</p>
-                    <p><a href="/base?command=openPDF&id=${homework.id}&from=homework">open pdf file</a></p>
-
-                    <p><a href="/base?command=showDataInHomeworkForm&homework=${homework.id}">Update</a></p>
+                    <p><a href="/base?command=showDataInHomeworkForm&homework_id=${homework.id}&name=${homework.name}&description=${homework.description}&deadline=${homework.deadline}&user_id=${homework.userID.id}&group_id=${homework.groupID.id}">Update</a></p>
                     <p><a href="/base?command=deleteHomework&id=${homework.id}">Delete</a></p>
                 </div>
             </c:forEach>
@@ -79,7 +98,7 @@
                     <div class="homework">
                         <p>${homework.name}</p>
                         <p>From ${homework.userID.lastName} ${homework.userID.firstName}</p>
-                        <p>From ${homework.description}</p>
+                        <p>${homework.description}</p>
                         <p><a href="/base?command=openPDF&id=${homework.id}&from=homework">open pdf file</a></p>
                         <c:choose>
                             <c:when test="${now.time gt parsedExpDate.time}">

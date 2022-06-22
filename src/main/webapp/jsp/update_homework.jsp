@@ -15,6 +15,9 @@
 <body onload="foo()">
 <form method="post" enctype="multipart/form-data" action="/base">
     <input type="hidden" name="command" value="updateHomework">
+    <input type="hidden" name="homework_id" value="${homework_id}">
+    <input type="hidden" name="user_id" value="${user_id}">
+    <input type="hidden" name="group_id" value="${group_id}">
     <input type="text" id = "name" name="name" value="${name}" required>
     <label for="name">Name:</label>
     <br/>
@@ -23,18 +26,14 @@
     <label for="description">Description:</label>
     <br/>
     <br/>
-    <label for="file_upload">Load <u>again</u> pdf file here:</label> <br/>
+    <label for="file_upload">Load <u>another</u> pdf file here or leave empty:</label> <br/>
     <input type="file" accept="application/pdf" id="file_upload" name="file_upload">
     <br/>
 
     <label for="datefield">Choose deadline date</label> <br/>
     <input type="date" name = "date" id = "datefield" min = "1970-01-01"  value="${deadline}"> <br/>
 
-    <c:if test="">
-
-    </c:if>
-
-    <label>Choose for which group (${group_codename}${group_number})</label> <br/>
+    <label>Choose for which group</label> <br/>
     <c:forEach var="group" items="${groups}">
 
         <c:choose>

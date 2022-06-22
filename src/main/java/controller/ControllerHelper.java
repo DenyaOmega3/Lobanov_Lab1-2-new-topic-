@@ -28,6 +28,10 @@ public class ControllerHelper {
         commands.put("signOut", new SignOutCommand());
         commands.put("updateHomework", new UpdateHomeworkCommand());
         commands.put("showDataInHomeworkForm", new ShowDataInHomeworkFormCommand());
+        commands.put("deleteStudent", new DeleteStudentCommand());
+        commands.put("showDataInUserForm", new ShowDataInUserFormCommand());
+        commands.put("updateUser", new UpdateUserCommand());
+        commands.put("updateGroup", new UpdateGroupCommand());
     }
 
     public ICommand getCommand(HttpServletRequest request) {

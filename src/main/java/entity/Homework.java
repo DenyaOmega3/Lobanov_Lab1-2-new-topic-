@@ -1,7 +1,9 @@
 package entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 
 import java.io.InputStream;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Homework {
     int id;
     String name;
@@ -19,8 +22,6 @@ public class Homework {
     LocalDate deadline;
     User userID;
     Group groupID;
-
-
     public Homework(String name, String description, InputStream pdfFile, LocalDate deadline, User userID, Group groupID) {
         this.name = name;
         this.description = description;

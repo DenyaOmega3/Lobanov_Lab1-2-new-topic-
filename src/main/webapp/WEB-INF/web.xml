@@ -75,5 +75,23 @@
         <servlet-name>StudentToGroup</servlet-name>
         <url-pattern>/studenttogroup</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateUser</servlet-name>
+        <jsp-file>/jsp/update_user.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateUser</servlet-name>
+        <url-pattern>/updateuser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SwitchGroup</servlet-name>
+        <jsp-file>/jsp/switch_group.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SwitchGroup</servlet-name>
+        <url-pattern>/switchgroup</url-pattern>
+    </servlet-mapping>
 </web-app>
 
