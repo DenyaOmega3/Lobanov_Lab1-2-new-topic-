@@ -123,7 +123,7 @@ public class UserDAO implements DAO<User> {
 
     public User getByEMail(String email) throws SQLException {
         String sqlCommand = "SELECT *FROM " + TABLE + " WHERE " + EMAIL + " = ? ";
-        User user = new User();
+        User user = null;
 
         try (Connection connection = DBUtil.getDataSource().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand);) {
@@ -131,6 +131,7 @@ public class UserDAO implements DAO<User> {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                user = new User();
                 user.setId(resultSet.getInt(USER_ID));
                 user.setFirstName(resultSet.getString(FIRST_NAME));
                 user.setLastName(resultSet.getString(LAST_NAME));

@@ -37,6 +37,7 @@ public class SignUpCommand implements ICommand {
 
         try {
             User checkIfExists = userDAO.getByEMail(email);
+            System.out.println(checkIfExists);
             if (checkIfExists != null) {
                 return "/signup?account_exists=true";
             }

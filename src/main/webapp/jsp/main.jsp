@@ -61,6 +61,7 @@
                     <p>${homework.name}</p>
                     <p>From ${homework.userID.lastName} ${homework.userID.firstName}</p>
                     <p>${homework.description}</p>
+                    <p><a href="/base?command=openPDF&id=${homework.id}&from=homework">open pdf file</a></p>
                     <p><a href="/base?command=showDataInHomeworkForm&homework_id=${homework.id}&name=${homework.name}&description=${homework.description}&deadline=${homework.deadline}&user_id=${homework.userID.id}&group_id=${homework.groupID.id}">Update</a></p>
                     <p><a href="/base?command=deleteHomework&id=${homework.id}">Delete</a></p>
                 </div>
@@ -110,16 +111,10 @@
                         </c:choose>
                     </div>
                     <div class="homework">
-                        <form method="post" enctype="multipart/form-data" action="/base">
-                            <input type="hidden" name="command" value="addSubmit">
-                            <input type="hidden" name="homework" value="${homework.id}">
-                            <label for="file_upload">Load pdf file here:</label>
-                            <input type="file" accept="application/pdf" id="file_upload" name="file_upload">
-                            <br/>
-                            <input type="submit" name = "s1" value="submit homework">
-                        </form>
+                        <c:set var = "did_submit" value="f"/>
                         <c:forEach var="submit" items="${submitList}">
                             <c:if test="${submit.homework_id.id == homework.id}">
+                                <c:set var = "did_submit" value="t"/>
                                 <c:choose>
                                     <c:when test="${submit.grade == '-1'}">
                                         <p>this already submitted</p>
@@ -128,10 +123,18 @@
                                         <p>grade: ${submit.grade}</p>
                                     </c:otherwise>
                                 </c:choose>
-
                             </c:if>
                         </c:forEach>
-
+                        <c:if test="${did_submit == \"f\"}">
+                            <form method="post" enctype="multipart/form-data" action="/base">
+                                <input type="hidden" name="command" value="addSubmit">
+                                <input type="hidden" name="homework" value="${homework.id}">
+                                <label for="file_upload">Load pdf file here:</label>
+                                <input type="file" accept="application/pdf" id="file_upload" name="file_upload">
+                                <br/>
+                                <input type="submit" name = "s1" value="submit homework">
+                            </form>
+                        </c:if>
                     </div>
                 </div>
             </c:forEach>
